@@ -1,0 +1,90 @@
+---
+title: "R-ggridges"
+date: "Last compiled on `r format(Sys.time(), '%c, %Z')`"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message=FALSE, warning = FALSE)
+```
+
+## R-ggridges Introduction with `geom_density_ridges()`
+
+### Load the data
+
+```{r}
+
+# library
+library(tidyverse)
+library(ggridges) # Ridgeline Plots in ggplot2
+library(ggplot2)
+(diamonds)
+```
+
+### Visualization part
+
+#### Basic plot
+
+```{r}
+
+diamonds %>% 
+  ggplot(aes(x = price, y = cut, fill = cut))+
+  geom_density_ridges()+
+  theme_ridges()+
+  theme(legend.position = 'none')
+
+```
+
+> Ideal cuts do not neccessarily have higher price. Why is that? Shouldn't that be the better cuts, the higher price?
+A: "Ideal" does not mean the best?
+
+#### Change to histogram with `stat='binline', bins=22, alpha=0.6`
+
+```{r}
+diamonds %>% 
+  ggplot(aes(x = price, y = cut, fill = cut))+
+  geom_density_ridges(alpha=.6, stat = 'binline', bins=22)+
+  theme_ridges()+
+  theme(legend.position = 'none')
+  
+  
+```
+
+#### Facet by the third variable (`facet_wrap()`)
+
+```{r}
+diamonds %>% 
+  ggplot(aes(x = price, y = cut, fill = cut))+
+  geom_density_ridges(alpha=.6)+
+  facet_wrap(~color)+
+  theme_ridges()+
+  theme(legend.position = 'none')+
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+
+```
+
+#### Add statistical measurements (quantiles) by `quantile_lines = TRUE`
+
+```{r}
+
+diamonds %>% 
+  ggplot(aes(x = price, y = cut, fill = cut))+
+  geom_density_ridges(alpha=.7, quantile_lines = TRUE)+
+  theme_ridges()+
+  theme(legend.position = 'none')
+
+
+```
+
+```{r}
+
+
+
+
+```
+
+
+
+
+
